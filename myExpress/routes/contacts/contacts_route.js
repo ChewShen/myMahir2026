@@ -28,7 +28,7 @@ router.get("/add", (req, res) => {
     renderFormPage(res);
 });
 
-router.post('/add', (req,res) => {
+router.post(`/add`, (req,res) => {
     const {name,phone} = req.body;
     const newContact = {
         id: contacts.length+1,
@@ -39,6 +39,7 @@ router.post('/add', (req,res) => {
     res.redirect('/contacts');
 });
 
+// view proifle detail
 router.get( '/:id', (req, res) => {
   const contact = contacts.find( c => c.id == req.params.id );
 
@@ -51,6 +52,15 @@ router.get( '/:id', (req, res) => {
     content: 'View detailed information about this contact.', 
     contact
   });
+});
+
+// Handle Delete Contact
+router.post('/delete/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const index = contacts.findIndex(item => item.id == id);
+    if(index < 0) return res.status(404).send('Contact id not found');
+    contacts.splice(index, 1);
+    res.redirect('/contacts');
 });
 
 

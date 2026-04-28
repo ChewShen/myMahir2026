@@ -11,6 +11,9 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+const methodOverride = require( 'method-override' );
+app.use( methodOverride( '_method' ));
+
 app.get('/',(req,res) => {
     res.send('Hello Express!');
 });
@@ -35,5 +38,10 @@ app.use(`/blogs`, blogRoutes);
 
 const contactRoutes = require(`./routes/contacts/contacts_route`);
 app.use(`/contacts`,contactRoutes);
+
+const userRoutes = require(`./routes/users/users_route`);
+app.use( '/users', userRoutes );
+
+
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
